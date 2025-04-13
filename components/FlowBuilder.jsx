@@ -16,18 +16,17 @@ const FlowBuilder = () => {
   const [showSettingsModal, setShowSettingsModal] = useState(false);
   const [selectedNode, setSelectedNode] = useState(null);
   const [nodeFormData, setNodeFormData] = useState({});
-  const [showScheduleModal, setShowScheduleModal] = useState(false); // Schedule modal state
-  const [scheduleDateTime, setScheduleDateTime] = useState(""); // Store selected date and time
+  const [showScheduleModal, setShowScheduleModal] = useState(false); 
+  const [scheduleDateTime, setScheduleDateTime] = useState(""); 
 
   const handleAddNodeClick = () => setShowTypeModal(true);
 
   const handleCreateNode = (type) => {
     const newNodeId = uuidv4();
 
-    // Calculate the vertical position for the new node
     const position = {
-      x: window.innerWidth / 2 - 100, // Center the node horizontally (adjust 100 for node width)
-      y: nodes.length * 100, // Stack nodes vertically
+      x: window.innerWidth / 2 - 100, 
+      y: nodes.length * 100, 
     };
 
     const labelMap = {
@@ -77,7 +76,6 @@ const FlowBuilder = () => {
     console.log("Schedule Date ", scheduleDateTime);
     console.log(JSON.stringify(flowData, null, 2));
 
-    // Find the coldEmail node
     const coldEmailNode = flowData.nodes.find(
       (node) => node.type === "coldEmail"
     );
@@ -100,7 +98,7 @@ const FlowBuilder = () => {
       to,
       subject,
       body,
-      time: scheduleDateTime, // Must be in valid date format
+      time: scheduleDateTime, 
     };
 
     try {
@@ -390,16 +388,16 @@ const FlowBuilder = () => {
                     return;
                   }
 
-                  handleSave(); // Show confirmation alert
-                  setShowScheduleModal(false); // Close the modal
-                  // You can also trigger the save process here
+                  handleSave(); 
+                  setShowScheduleModal(false); 
+                 
                 }}
                 className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 ✅ Set Schedule
               </button>
               <button
-                onClick={() => setShowScheduleModal(false)} // Close the modal
+                onClick={() => setShowScheduleModal(false)} 
                 className="text-gray-600 hover:underline"
               >
                 Cancel
