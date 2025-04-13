@@ -9,7 +9,7 @@ export default function Home() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-
+  const [isLoading,setIsLoading] = useState(false)
   const router = useRouter();
   const resetForm = () => {
     setEmail("");
@@ -19,6 +19,7 @@ export default function Home() {
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const res = await fetch("https://email-flow-backend.onrender.com/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,18 +30,21 @@ export default function Home() {
       if (res.ok) {
         localStorage.setItem("token", data.token);
         setMessage("✅ Login successful");
+        setIsLoading(false);
         router.push("/dashboard");
-        setTimeout(() => setShowLogin(false), 1000);
       } else {
         setMessage(data.error || "Login failed");
+        setIsLoading(false);
       }
     } catch (err) {
       setMessage("Something went wrong");
+      setIsLoading(false);
     }
   };
 
   const handleSignup = async () => {
     try {
+      setIsLoading(true)
       const res = await fetch(
         "https://email-flow-backend.onrender.com/signup",
         {
@@ -53,10 +57,11 @@ export default function Home() {
       const data = await res.json();
       if (res.ok) {
         setMessage("✅ Signup successful");
+        setIsLoading(false);
         router.push("/dashboard");
-        setTimeout(() => setShowSignup(false), 1000);
       } else {
         setMessage(data.error || "Signup failed");
+        setIsLoading(false);
       }
     } catch (err) {
       setMessage("Something went wrong");
@@ -117,7 +122,7 @@ export default function Home() {
               onClick={showLogin ? handleLogin : handleSignup}
               className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700 mb-2 cursor-pointer"
             >
-              {showLogin ? "Login" : "Signup"}
+              { isLoading?"Loading..." : showLogin ? "Login" : "Signup"}
             </button>
             <p className="text-sm text-center text-gray-700">{message}</p>
             <button
