@@ -100,7 +100,7 @@ const FlowBuilder = () => {
       to,
       subject,
       body,
-      time: scheduleDateTime.toISOString(), // Must be in valid date format
+      time: scheduleDateTime, // Must be in valid date format
     };
 
     try {
